@@ -6,6 +6,10 @@ import Prepostcontent from "./Prepostcontent/Prepostcontent";
 
 type PostDataType = {
     postData : Array<Postdata>
+    pushFunc : (postText:string)=>void
+    textArreaText:string
+    changeTextArreaValue:(value:any)=>void
+
 }
 
 
@@ -13,7 +17,11 @@ const Profile = (props:PostDataType) => {
 
     return <div>
         <Prepostcontent />
-        <MyPosts postData={props.postData} />
+        <MyPosts postData={props.postData}
+                 pushFunc={props.pushFunc}
+                 textArreaText={props.textArreaText}
+                 changeTextArreaValue={props.changeTextArreaValue}
+        />
 
     </div>
 

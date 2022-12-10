@@ -11,38 +11,43 @@ type DialoguserspropsType = {
 }
 
 
-
- const Dialogs = (props:DialoguserspropsType) => {
-     console.log('dialog', props)
+const Dialogs = (props: DialoguserspropsType) => {
+    console.log('dialog', props)
     //MAP USERS
     let messageUser = props.users
         .map(user =>
-            (<Dialogusers name={user.name} id={user.id}  />)
+            (<Dialogusers name={user.name} id={user.id}/>)
         )
-     //MAP MESSAGES
+    //MAP MESSAGES
 
     let messagesMap =
         props.messages
-            .map(m => (<Message message={m.message} />))
+            .map(m => (<Message message={m.message}/>))
 
 
     // let textarea = React.createRef();
     // let text = ()=>{alert( textarea.current.value)}
 
+    let textArrea = React.createRef<HTMLTextAreaElement>()
+
+    let btFoo = ()=>{
+        alert(textArrea.current?.value)
+    }
+
     //DIALOG RESULT V V V V
-
-
-
 
     return <div className={s.dialogs}>
         <div>
             {messageUser}
         </div>
         <div>
-        {messagesMap}
+            {messagesMap}
         </div>
+
+        <textarea ref={textArrea}></textarea>
+        <button onClick={btFoo}></button>
+
+
     </div>
-//
 }
-//
 export default Dialogs;

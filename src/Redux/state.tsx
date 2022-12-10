@@ -1,3 +1,6 @@
+import profile from "../Components/Profile/Profile";
+import {rerenderEntireTree} from "../render";
+
 export type State = {
     profilePage:Profilepage
     messagesPage:Messagespage
@@ -7,10 +10,11 @@ export type State = {
 //------------profilePage
 export type Profilepage = {
     postData: Array<Postdata>
+    textArreaText:string
 }
 
 export type Postdata = {
-    postText : string
+    postText : string //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     likesCount : number
 }
 
@@ -51,6 +55,7 @@ export let state:State = {
             {postText:'Hello Kostya', likesCount: 12},
             {postText:'Hello Komk', likesCount: 41}
         ],
+        textArreaText: 'hh'
 
     },
     messagesPage:{
@@ -71,6 +76,34 @@ export let state:State = {
         user2: 'Andrew',
         user3: 'Rodrigo'
     }
+}
+
+export let pushFunc = (newPostMessage:string) => {
+    let newObj:Postdata = {postText:newPostMessage,likesCount:0}
+    let newPost =
+        state.profilePage.postData.push(newObj)
+    rerenderEntireTree(state)
+        // {...state, profilePage: {...state.profilePage,postData:
+        //         [...state.profilePage.postData,{postText:newPostMessage,likesCount:0}]}}
+    return newPost
+}
+
+
+export let textArreaText = state.profilePage.textArreaText
+
+export function changeTextArreaValue (textArreaValue:string) {
+
+    // let value = {...state,profilePage: {...state.profilePage,
+    //         textArreaText:state.profilePage.textArreaText,textArreaValue}}
+
+    // let textArreaTextvalue = state.profilePage.textArreaText
+// textArreaTextvalue = textArreaValue
+    // console.log(textArreaTextvalue)
+
+    let push = state.profilePage.textArreaText = textArreaValue
+    rerenderEntireTree(state)
+
+    return push
 }
 
 

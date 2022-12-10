@@ -4,17 +4,20 @@ import {Routes, Route} from 'react-router-dom';
 import './App.css';
 import s from './Content.module.css';
 import Dialogs from './Components/Dialogs/Dialogs';
-import {State} from "./Redux/state";
+import {changeTextArreaValue, State} from "./Redux/state";
 import Profile from "./Components/Profile/Profile";
 import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navbar/Navbar";
 
 
-type ApppropsType = {
+type AppPropsType = {
     state: State
+    pushFunc:(postText:string)=>void
+    textArreaText:string
+    changeTextArreaValue:(value:any)=>void
 }
 
-function App(props: ApppropsType) {
+function App(props: AppPropsType) {
     console.log('app', props)
     return (
         <BrowserRouter>
@@ -25,7 +28,13 @@ function App(props: ApppropsType) {
                 <div className={s.content}>
                     <Routes>
                         <Route path="/"
-                               element={<Profile postData={props.state.profilePage.postData}/>}/>
+                               element={<Profile postData={props.state.profilePage.postData}
+                                                 pushFunc={props.pushFunc}
+                                                 textArreaText={props.state.profilePage.textArreaText}
+                                                 changeTextArreaValue={props.changeTextArreaValue}
+
+
+                                   />}/>
                         <Route path="/dialogs"
                                element={<Dialogs users={props.state.messagesPage.users}
                                                  messages={props.state.messagesPage.messages}/>}/>
