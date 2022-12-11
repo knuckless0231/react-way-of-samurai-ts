@@ -17,19 +17,21 @@ const MyPosts = (props: MyPostPropsType) => {
     let mapPost = props.postData
         .map((p,index)=> (<Post key={index} message={p.postText} like={p.likesCount}/>))
 
-    let textarea = React.createRef<HTMLTextAreaElement>();
-    // let textArreaValue = textarea.current?.value
+    // let textarea = React.createRef<HTMLTextAreaElement>();
 
     const addPost = () => {
-        if (textarea.current) {
-            props.pushFunc(textarea.current.value)
-        }
+        // if (textarea.current) {
+            props.pushFunc(
+                // textarea.current.value
+            props.textArreaText
+            )
+        // }
     }
 
 
-    const changeValueFunc = () => {
-let text = textarea.current?.value
-        props.changeTextArreaValue(text)
+    const changeValueFunc = (e:ChangeEvent<HTMLTextAreaElement>) => {
+// let text = textarea.current?.value
+        props.changeTextArreaValue(e.currentTarget.value)
     }
 
 
@@ -38,7 +40,7 @@ let text = textarea.current?.value
             My posts
             <div>
                 <textarea
-                    ref={textarea}
+                    // ref={textarea}
                     value={props.textArreaText}
                     onChange={changeValueFunc}
                  >
