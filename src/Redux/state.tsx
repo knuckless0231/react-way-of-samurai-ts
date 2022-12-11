@@ -1,6 +1,12 @@
 import profile from "../Components/Profile/Profile";
-import {rerenderEntireTree} from "../render";
+import {observe} from "web-vitals/dist/modules/lib/observe";
 
+let rerenderEntireTree = (state:State) => {
+    console.log('rendered')
+
+}
+
+//main Type for all STATE
 export type State = {
     profilePage:Profilepage
     messagesPage:Messagespage
@@ -46,7 +52,7 @@ export type Sidebartype = {
 
 
 //связка данных с типизацией данных
-//указание типа(State) для конуретных данных(state)
+//указание типа(State) для конкретных данных(state)
 export let state:State = {
 
     profilePage:{
@@ -55,7 +61,7 @@ export let state:State = {
             {postText:'Hello Kostya', likesCount: 12},
             {postText:'Hello Komk', likesCount: 41}
         ],
-        textArreaText: 'hh'
+        textArreaText: ''
 
     },
     messagesPage:{
@@ -77,35 +83,31 @@ export let state:State = {
         user3: 'Rodrigo'
     }
 }
+export let textArreaText = state.profilePage.textArreaText
 
+//функция добавляющая новый пост
 export let pushFunc = (newPostMessage:string) => {
     let newObj:Postdata = {postText:newPostMessage,likesCount:0}
-    let newPost =
-        state.profilePage.postData.push(newObj)
+    let newPost = state.profilePage.postData.push(newObj)
     rerenderEntireTree(state)
-        // {...state, profilePage: {...state.profilePage,postData:
-        //         [...state.profilePage.postData,{postText:newPostMessage,likesCount:0}]}}
+    state.profilePage.textArreaText = ''
+
     return newPost
 }
 
-
-export let textArreaText = state.profilePage.textArreaText
-
+//функиця меняющая значение при каждом новом вводе
 export function changeTextArreaValue (textArreaValue:string) {
-
-    // let value = {...state,profilePage: {...state.profilePage,
-    //         textArreaText:state.profilePage.textArreaText,textArreaValue}}
-
-    // let textArreaTextvalue = state.profilePage.textArreaText
-// textArreaTextvalue = textArreaValue
-    // console.log(textArreaTextvalue)
-
     let push = state.profilePage.textArreaText = textArreaValue
     rerenderEntireTree(state)
 
     return push
 }
 
+//Функия rerenderEntireTree
+export const subscribe = (observer:any) => {
+ rerenderEntireTree = observer
+    console.log('changed')
+}
 
 
 
