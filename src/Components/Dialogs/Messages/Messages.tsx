@@ -3,7 +3,7 @@ import s from './../Dialogs.module.css'
 import {Messages, Messagespage} from "../../../Redux/state";
 
 type MessagespropsType = {
-    message : string
+    message : string|undefined
 }
 
 let Message = (props:MessagespropsType) => {

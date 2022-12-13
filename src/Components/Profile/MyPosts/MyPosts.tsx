@@ -1,14 +1,12 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post'
-import {Postdata} from "../../../Redux/state";
+import {Postdata, TsarType} from "../../../Redux/state";
 
 type MyPostPropsType = {
     postData: Array<Postdata>
-    pushFunc: (postText: string) => void
     textArreaText: string
-    changeTextArreaValue:(value:any)=>void
-
+    dispatch:(action:TsarType)=>void
 }
 
 
@@ -17,21 +15,15 @@ const MyPosts = (props: MyPostPropsType) => {
     let mapPost = props.postData
         .map((p,index)=> (<Post key={index} message={p.postText} like={p.likesCount}/>))
 
-    // let textarea = React.createRef<HTMLTextAreaElement>();
 
     const addPost = () => {
-        // if (textarea.current) {
-            props.pushFunc(
-                // textarea.current.value
-            props.textArreaText
-            )
-        // }
+        props.dispatch({type: "ADD-POST",newPostMessage: props.textArreaText})
     }
 
 
     const changeValueFunc = (e:ChangeEvent<HTMLTextAreaElement>) => {
-// let text = textarea.current?.value
-        props.changeTextArreaValue(e.currentTarget.value)
+        props.dispatch({type:"CHANGE-VALUE",textArreaValue: e.currentTarget.value})
+
     }
 
 
@@ -40,7 +32,6 @@ const MyPosts = (props: MyPostPropsType) => {
             My posts
             <div>
                 <textarea
-                    // ref={textarea}
                     value={props.textArreaText}
                     onChange={changeValueFunc}
                  >

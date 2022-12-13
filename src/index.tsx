@@ -1,27 +1,30 @@
-import {state, subscribe} from "./Redux/state";
+import store, {State, textArreaText} from "./Redux/state";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {changeTextArreaValue, pushFunc, State, textArreaText} from "./Redux/state"
 
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement);
 
 export const rerenderEntireTree = (state:State) => {
+    const textArreaValueforDialogs = state.messagesPage.textArreaDialog
     root.render (
         <App
             state={state}
-            pushFunc={pushFunc}
             textArreaText={textArreaText}
-            changeTextArreaValue={changeTextArreaValue}
+            dispatch = {store.dispatch.bind(store)}
+            textArreaValueforDialogs={textArreaValueforDialogs}
+            // pushFunc={store.pushFunc.bind(store)}
+            // changeTextArreaValue={store.changeTextArreaValue.bind(store)}
+            // getState = {store.getState}
         />
     );
     reportWebVitals();
 }
 
-rerenderEntireTree(state)
+rerenderEntireTree(store.getState())
 
-subscribe(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)

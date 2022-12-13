@@ -1,37 +1,38 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 
-import {Messages, Users} from "../../Redux/state";
+import {Messages, textArreaValueforDialogs, TsarType, Users} from "../../Redux/state";
 import Dialogusers from "./Dialogusers/Dialogusers";
 import Message from "./Messages/Messages";
 
 type DialoguserspropsType = {
     users: Array<Users>
     messages: Array<Messages>
+    dispatch: (action: TsarType) => void
+    textArreaValueforDialogs:string
 }
 
 
 const Dialogs = (props: DialoguserspropsType) => {
-    console.log('dialog', props)
-    //MAP USERS
+    // USERS
     let messageUser = props.users
         .map(user =>
-            (<Dialogusers name={user.name} id={user.id}/>)
+            (<Dialogusers key={user.id} name={user.name} id={user.id}/>)
         )
     //MAP MESSAGES
+    let messagesMap = props.messages
+            .map((m,index) => (<Message key={index} message={m.message}/>))
 
-    let messagesMap =
-        props.messages
-            .map(m => (<Message message={m.message}/>))
+    // let textArrea = React.createRef<HTMLTextAreaElement>()
 
+    let sendMessage = () => {
+        // let textArrea1 = textArreaValueforDialogs
+        props.dispatch({type:'ADD-NEW-MESSAGE',newMessage:props.textArreaValueforDialogs
+        })
+    }
 
-    // let textarea = React.createRef();
-    // let text = ()=>{alert( textarea.current.value)}
-
-    let textArrea = React.createRef<HTMLTextAreaElement>()
-
-    let btFoo = ()=>{
-        alert(textArrea.current?.value)
+    const takeValueFoo = (e:ChangeEvent<HTMLTextAreaElement>)=>{
+        props.dispatch({type:'CHANGE-DIALOG-VALUE',textArreaValue:e.currentTarget.value})
     }
 
     //DIALOG RESULT V V V V
@@ -44,8 +45,11 @@ const Dialogs = (props: DialoguserspropsType) => {
             {messagesMap}
         </div>
 
-        <textarea ref={textArrea}></textarea>
-        <button onClick={btFoo}></button>
+        <textarea value={props.textArreaValueforDialogs}
+        onChange={takeValueFoo}
+        >
+        </textarea>
+        <button onClick={sendMessage}></button>
 
 
     </div>
