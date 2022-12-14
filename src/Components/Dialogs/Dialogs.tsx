@@ -45,7 +45,8 @@ const Dialogs = (props: DialoguserspropsType) => {
             {messagesMap}
         </div>
 
-        <textarea value={props.textArreaValueforDialogs}
+        <textarea placeholder={'enter message'}
+            value={props.textArreaValueforDialogs}
         onChange={takeValueFoo}
         >
         </textarea>

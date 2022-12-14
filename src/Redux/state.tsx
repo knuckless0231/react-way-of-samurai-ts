@@ -1,5 +1,7 @@
 // -----------------------------------Types----------------------------
 //main Typo
+import {v1} from "uuid";
+
 export type store = {
     _state: State
     subscribe: (observer: any) => void
@@ -35,6 +37,7 @@ export type Users = {
 }
 export type Messages = {
     message: string
+    id:string
 }
 //------sideBar
 export type Sidebartype = {
@@ -110,9 +113,9 @@ let store: store = {
                 {name: "Bob", id: 2}
             ],
             messages: [
-                {message: 'Kinch'},
-                {message: 'Kinch1'},
-                {message: 'Kinch2'}
+                {id:v1(),message: 'Kinch'},
+                {id:v1(),message: 'Kinch1'},
+                {id:v1(),message: 'Kinch2'}
             ],
             textArreaDialog : ''
         },
@@ -144,7 +147,7 @@ let store: store = {
             }
 //функиця добавляющая новое сообщение
             case "ADD-NEW-MESSAGE": {
-                let newMessage = {message: action.newMessage}
+                let newMessage = {id:v1(),message: action.newMessage}
                 this._state.messagesPage.messages.push(newMessage)
                 this._rerenderEntireTree(this._state)
                 return newMessage
